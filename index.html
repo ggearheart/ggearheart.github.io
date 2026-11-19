@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Greg Gearheart's projects, sorted into Work, Fun and Food.">
+<title>Greg's Project Arcade</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Monoton&family=Righteous&family=VT323&display=swap">
+<style>
+/* Layout: sunset-and-grid marquee up top, then three neon-coded channels (work / fun / food),
+   each split into topics holding cassette-label cards. Single committed dark look. */
+:root {
+  color-scheme: dark;
+  --night: #140b2e;
+  --night-2: #1f1147;
+  --panel: #23134f;
+  --ink: #f4ecff;
+  --ink-dim: #b9a8e0;
+  --cyan: #2de2e6;
+  --pink: #ff3caa;
+  --yellow: #ffd319;
+  --orange: #ff7a3c;
+  --grid: #7b3cff;
+  --display: "Monoton", "Righteous", Impact, sans-serif;
+  --head: "Righteous", "Trebuchet MS", Verdana, sans-serif;
+  --body: "VT323", "Courier New", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.3rem;
+  line-height: 1.25;
+}
+a { color: inherit; }
+a:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+
+.wrap {
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- Marquee ---------- */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(var(--night) 0%, var(--night-2) 55%, #4a1466 100%);
+  border-bottom: 4px solid var(--pink);
+  text-align: center;
+}
+.marquee .wrap { position: relative; z-index: 2; padding-block: 2.5rem 6.5rem; }
+.sun {
+  position: absolute; z-index: 0;
+  left: 50%; bottom: 3.2rem;
+  width: min(300px, 62vw); aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 22px, var(--night-2) 22px 28px) 0 100% / 100% 50% no-repeat,
+    linear-gradient(var(--yellow), var(--orange) 45%, var(--pink) 85%);
+  opacity: .85;
+}
+.floor {
+  position: absolute; z-index: 1;
+  left: -50%; right: -50%; bottom: 0; height: 5rem;
+  background:
+    linear-gradient(var(--night), transparent 70%),
+    repeating-linear-gradient(90deg, var(--grid) 0 2px, transparent 2px 60px),
+    repeating-linear-gradient(0deg, var(--grid) 0 2px, transparent 2px 24px),
+    var(--night);
+  transform: perspective(240px) rotateX(58deg);
+  transform-origin: bottom;
+}
+.kicker {
+  font-family: var(--head);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  font-size: .95rem;
+  color: var(--cyan);
+  margin: 0 0 .6rem;
+}
+h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.3rem, 9vw, 5.5rem);
+  line-height: 1.05;
+  margin: 0;
+  color: var(--ink);
+  text-shadow: 0 0 6px var(--pink), 0 0 22px var(--pink), 3px 3px 0 var(--night);
+  text-wrap: balance;
+}
+.tagline { margin: .9rem auto 0; max-width: 34ch; color: var(--ink); text-shadow: 2px 2px 0 var(--night); }
+
+/* ---------- Channel nav ---------- */
+nav.channels {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem;
+  padding-block: 1.4rem .4rem;
+}
+nav.channels a {
+  font-family: var(--head);
+  text-transform: uppercase; letter-spacing: .12em;
+  font-size: 1rem;
+  text-decoration: none;
+  padding: .45rem 1.1rem;
+  border: 3px solid var(--c);
+  color: var(--c);
+  background: var(--night);
+  box-shadow: 4px 4px 0 var(--c);
+  transition: transform .1s, box-shadow .1s;
+}
+nav.channels a:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--c); }
+nav.channels small { font-family: var(--body); font-size: 1.1rem; letter-spacing: 0; color: var(--ink-dim); margin-left: .35rem; }
+
+/* ---------- Channels ---------- */
+main { display: flex; flex-direction: column; gap: 3rem; padding-block: 2rem 3rem; }
+.work { --c: var(--cyan); }
+.fun  { --c: var(--pink); }
+.food { --c: var(--yellow); }
+
+section.channel { display: flex; flex-direction: column; gap: 1.6rem; scroll-margin-top: 1rem; }
+.channel-head {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: .4rem 1rem;
+  border-bottom: 3px solid var(--c);
+  padding-bottom: .5rem;
+}
+h2 {
+  font-family: var(--head);
+  font-weight: 400;
+  font-size: clamp(2rem, 6vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin: 0;
+  color: var(--c);
+  text-shadow: 3px 3px 0 var(--night-2), 0 0 14px color-mix(in srgb, var(--c) 60%, transparent);
+}
+.channel-head p { margin: 0; color: var(--ink-dim); }
+
+.topic { display: flex; flex-direction: column; gap: .9rem; }
+h3 {
+  font-family: var(--head);
+  font-weight: 400;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  margin: 0;
+  color: var(--ink);
+}
+h3::before { content: "▶ "; color: var(--c); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  gap: 1.25rem;
+}
+.card {
+  min-width: 0;
+  display: flex; flex-direction: column; gap: .6rem;
+  background: var(--panel);
+  border: 3px solid var(--c);
+  box-shadow: 6px 6px 0 var(--c);
+  padding: 1rem 1.1rem 1.1rem;
+}
+.card h4 {
+  font-family: var(--head);
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.card p { margin: 0; color: var(--ink); flex: 1; }
+.tags { display: flex; flex-wrap: wrap; gap: .4rem; list-style: none; margin: 0; padding: 0; }
+.tags li {
+  font-size: 1.05rem; line-height: 1;
+  padding: .15rem .45rem;
+  color: var(--ink-dim);
+  border: 1px dashed var(--ink-dim);
+}
+.go {
+  align-self: flex-start;
+  font-family: var(--head);
+  font-size: .9rem;
+  text-transform: uppercase; letter-spacing: .12em;
+  text-decoration: none;
+  color: var(--night);
+  background: var(--c);
+  padding: .4rem .8rem;
+}
+.go:hover { background: var(--ink); }
+
+footer {
+  border-top: 4px solid var(--grid);
+  text-align: center;
+  color: var(--ink-dim);
+}
+footer .wrap { padding-block: 1.4rem 2rem; }
+footer span { color: var(--yellow); }
+
+@media (prefers-reduced-motion: reduce) { nav.channels a { transition: none; } }
+html, body { margin: 0; }
+img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="marquee">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="floor" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="kicker">Now showing · 16 titles</p>
+    <h1>Greg's Projects</h1>
+    <p class="tagline">Water data by day. Lotteries, voodoo and chicken &amp; rice by night.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="channels" aria-label="Categories">
+    <a class="work" href="#work">Work <small>×11</small></a>
+    <a class="fun" href="#fun">Fun <small>×4</small></a>
+    <a class="food" href="#food">Food <small>×1</small></a>
+  </nav>
+
+  <main>
+    <!-- ================= WORK ================= -->
+    <section class="channel work" id="work">
+      <div class="channel-head">
+        <h2>Work</h2>
+        <p>California water, data and the people who depend on both.</p>
+      </div>
+
+      <div class="topic">
+        <h3>Harmful algal blooms</h3>
+        <div class="cards">
+          <article class="card">
+            <h4>CyanoSafe Demo</h4>
+            <p>Phone-sized demo for checking cyanobacteria bloom conditions, with an in-app form for reporting a bloom.</p>
+            <ul class="tags"><li>mobile demo</li><li>FHAB</li></ul>
+            <a class="go" href="https://ggearheart.github.io/CyanoSafe_demo/">Play ▶</a>
+          </article>
+          <article class="card">
+            <h4>HABaware</h4>
+            <p>HAB risk advisor for Clear Lake. Combines satellite remote sensing, tribal monitoring data and a forecast model into a plain-language advisory.</p>
+            <ul class="tags"><li>mobile demo</li><li>Clear Lake</li><li>forecast</li></ul>
+            <a class="go" href="https://ggearheart.github.io/HABaware_mobile_demo/">Play ▶</a>
+          </article>
+          <article class="card">
+            <h4>FHAB Database Modernized</h4>
+            <p>Python pipeline for California's freshwater harmful algal bloom data, built to the Internet of Water three-tier ingestion framework.</p>
+            <ul class="tags"><li>Python</li><li>data pipeline</li></ul>
+            <a class="go" href="https://github.com/ggearheart/FHAB_Database_Modernized">Repo ▶</a>
+          </article>
+          <article class="card">
+            <h4>HAB Coordination Strategy</h4>
+            <p>The Water Boards' six-entity conceptual model for coordinating on blooms, plus a freshwater HAB animation.</p>
+            <ul class="tags"><li>conceptual model</li><li>animation</li></ul>
+            <a class="go" href="https://ggearheart.github.io/HAB-Coordination-Strategy/">Play ▶</a>
+          </article>
+        </div>
+      </div>
+
+      <div class="topic">
+        <h3>Water quality &amp; open data</h3>
+        <div class="cards">
+          <article class="card">
+            <h4>Can I Swim Here?</h4>
+            <p>E. coli swim-safety map for the Lower American River. A sibling of the CyanoSafe demo.</p>
+            <ul class="tags"><li>map</li><li>E. coli</li></ul>
+            <a class="go" href="https://ggearheart.github.io/CanISwimHere/">Play ▶</a>
+          </article>
+          <article class="card">
+            <h4>CA Open Water Data Atlas</h4>
+            <p>A multi-plate atlas of California's open water data under AB 1755, the Open and Transparent Water Data Act.</p>
+            <ul class="tags"><li>atlas</li><li>AB 1755</li></ul>
+            <a class="go" href="https://ggearheart.github.io/CA_Open_Water_Data_Atlas/">Play ▶</a>
+          </article>
+          <article class="card">
+            <h4>CA Confined Animal Facilities</h4>
+            <p>Infographic of the confined animal facilities (CAFOs) regulated by the State Water Boards, built from the official CIWQS dataset.</p>
+            <ul class="tags"><li>infographic</li><li>CAFOs</li><li>CIWQS</li></ul>
+            <a class="go" href="https://ggearheart.github.io/CalCAF_demo/">Play ▶</a>
+          </article>
+          <article class="card">
+            <h4>CA Microplastics Network</h4>
+            <p>Draft vision for a statewide microplastics monitoring network, with an editable Word version built from the same source.</p>
+            <ul class="tags"><li>vision site</li><li>draft</li></ul>
+            <a class="go" href="https://ggearheart.github.io/calmicroplasticnet/">Play ▶</a>
+          </article>
+        </div>
+      </div>
+
+      <div class="topic">
+        <h3>OIMA &amp; community</h3>
+        <div class="cards">
+          <article class="card">
+            <h4>OIMA Strategic Vision 2030</h4>
+            <p>Landing page for the Office of Information Management and Analysis vision through 2030.</p>
+            <ul class="tags"><li>landing page</li><li>strategy</li></ul>
+            <a class="go" href="https://ggearheart.github.io/OIMA_strategic_vision_2030/">Play ▶</a>
+          </article>
+          <article class="card">
+            <h4>OIMA Safe Check-In</h4>
+            <p>"Are You Safe?" An emergency check-in app so staff can report their status fast when something goes wrong.</p>
+            <ul class="tags"><li>web app</li><li>emergency</li></ul>
+            <a class="go" href="https://ggearheart.github.io/oima-safe-checkin/">Play ▶</a>
+          </article>
+          <article class="card">
+            <h4>CA Language Isolation Map</h4>
+            <p>Census-tract map of linguistic isolation and languages spoken across California, from CalEnviroScreen 5.0 and ACS data.</p>
+            <ul class="tags"><li>map</li><li>census tracts</li></ul>
+            <a class="go" href="https://ggearheart.github.io/CA_Language_Isolation/">Play ▶</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FUN ================= -->
+    <section class="channel fun" id="fun">
+      <div class="channel-head">
+        <h2>Fun</h2>
+        <p>Side quests.</p>
+      </div>
+
+      <div class="topic">
+        <h3>Outdoors</h3>
+        <div class="cards">
+          <article class="card">
+            <h4>Lottery Odds Explorer</h4>
+            <p>How stiff is the competition? Odds for all 33 recreation.gov permit lotteries, from FY22 through FY25.</p>
+            <ul class="tags"><li>permits</li><li>odds</li></ul>
+            <a class="go" href="https://ggearheart.github.io/recgov-lottery/">Play ▶</a>
+          </article>
+          <article class="card">
+            <h4>Torrey Pines Tree Counts</h4>
+            <p>Roughly 3,000 years of Torrey pine counts, shaped into charts and slides for a friend's presentation.</p>
+            <ul class="tags"><li>data shaping</li><li>charts</li></ul>
+            <a class="go" href="https://github.com/ggearheart/torrey-pines-tree-counts">Repo ▶</a>
+          </article>
+        </div>
+      </div>
+
+      <div class="topic">
+        <h3>Sports</h3>
+        <div class="cards">
+          <article class="card">
+            <h4>Pitchcraft</h4>
+            <p>A single-page infographic on World Cup voodoo: the curses, charms and superstitions of the beautiful game.</p>
+            <ul class="tags"><li>infographic</li><li>World Cup</li></ul>
+            <a class="go" href="https://ggearheart.github.io/worldcup-voodoo-pitchcraft/">Play ▶</a>
+          </article>
+        </div>
+      </div>
+
+      <div class="topic">
+        <h3>Friends &amp; trips</h3>
+        <div class="cards">
+          <article class="card">
+            <h4>Shmaybe</h4>
+            <p>"Maybe, shmaybe." Finds trip dates that work for the whole group from the constraints everyone texts in.</p>
+            <ul class="tags"><li>web app</li><li>scheduling</li></ul>
+            <a class="go" href="https://ggearheart.github.io/shmaybe/">Play ▶</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOD ================= -->
+    <section class="channel food" id="food">
+      <div class="channel-head">
+        <h2>Food</h2>
+        <p>Dinner is served.</p>
+      </div>
+
+      <div class="topic">
+        <h3>Cookbooks</h3>
+        <div class="cards">
+          <article class="card">
+            <h4>Greg Likes Rice &amp; Chicken</h4>
+            <p>An open-source cookbook of 17 chicken-and-rice dishes from around the world. Read it on the web, or as a PDF or EPUB.</p>
+            <ul class="tags"><li>cookbook</li><li>17 dishes</li><li>Quarto</li></ul>
+            <a class="go" href="https://ggearheart.github.io/greg-likes-rice-and-chicken/">Play ▶</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">Be kind, rewind. <span>▶ Play</span> opens the live site, <span>▶ Repo</span> opens the code on GitHub.</div>
+</footer>
+</body>
+</html>
