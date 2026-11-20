@@ -191,6 +191,7 @@ h3::before { content: "▶ "; color: var(--c); }
   padding: .4rem .8rem;
 }
 .go:hover { background: var(--ink); }
+.go.soon, .go.soon:hover { background: transparent; color: var(--c); border: 2px dashed var(--c); }
 
 footer {
   border-top: 4px solid var(--grid);
@@ -210,7 +211,7 @@ img { max-width: 100%; }
   <div class="sun" aria-hidden="true"></div>
   <div class="floor" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="kicker">Now showing · 17 titles</p>
+    <p class="kicker">Now showing · 18 titles</p>
     <h1>Greg's Projects</h1>
     <p class="tagline">Water data by day. Lotteries, voodoo and chicken &amp; rice by night.</p>
   </div>
@@ -219,7 +220,7 @@ img { max-width: 100%; }
 <div class="wrap">
   <nav class="channels" aria-label="Categories">
     <a class="work" href="#work">Work <small>×11</small></a>
-    <a class="fun" href="#fun">Fun <small>×5</small></a>
+    <a class="fun" href="#fun">Fun <small>×6</small></a>
     <a class="food" href="#food">Food <small>×1</small></a>
   </nav>
 
@@ -373,6 +374,18 @@ img { max-width: 100%; }
             <p>A card game of evolutionary strategy duels: resource acquisition versus reproduction, settled by terrain, scenario and dice.</p>
             <ul class="tags"><li>card game</li><li>evolution</li></ul>
             <a class="go" href="https://ggearheart.github.io/eatfuckgo/">Play ▶</a>
+          </article>
+        </div>
+      </div>
+
+      <div class="topic">
+        <h3>Coming soon</h3>
+        <div class="cards">
+          <article class="card">
+            <h4>Rob the Font of Uplifting Information</h4>
+            <p>Details to come.</p>
+            <ul class="tags"><li>in the works</li></ul>
+            <span class="go soon">Coming soon</span>
           </article>
         </div>
       </div>
